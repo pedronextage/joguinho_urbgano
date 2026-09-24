@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.cs-root {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+.cs-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,14,26,0.55) 0%, rgba(10,14,26,0.75) 100%);
+}
+
+.cs-title {
+  position: relative;
+  z-index: 1;
+  color: #fdf6e3;
+  font-size: 22px;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 #1a1f2e, -1px -1px 0 #1a1f2e;
+  margin-bottom: 40px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.cs-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 56px;
+}
+
+.cs-arrow {
+  background: none;
+  border: none;
+  color: #fdf6e3;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 10px 6px;
+  text-shadow: 2px 2px 0 #1a1f2e;
+  transition: transform 0.12s ease;
+  line-height: 1;
+}
+.cs-arrow:hover { transform: scale(1.25); }
+.cs-arrow:active { transform: scale(0.95); }
+
+.cs-card {
+  position: relative;
+  width: 190px;
+  padding: 18px 14px 16px;
+  background: rgba(20, 24, 38, 0.55);
+  border: 4px solid #3a4260;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.cs-card:hover {
+  transform: translateY(-4px);
+}
+
+.cs-card.selected {
+  border-color: #ffd166;
+  background: rgba(255, 209, 102, 0.12);
+  animation: cs-bounce 0.6s ease infinite alternate;
+}
+
+@keyframes cs-bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+.cs-portrait-frame {
+  width: 140px;
+  height: 190px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.cs-portrait {
+  height: 100%;
+  width: auto;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 6px 4px rgba(0,0,0,0.4));
+}
+
+.cs-name {
+  color: #fdf6e3;
+  font-size: 13px;
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 0 #1a1f2e;
+}
+
+.cs-tagline {
+  color: #c9cede;
+  font-size: 8px;
+  line-height: 1.6;
+  text-align: center;
+  font-family: monospace;
+  min-height: 28px;
+}
+
+.cs-confirm {
+  position: relative;
+  z-index: 1;
+  margin-top: 44px;
+
+  padding: 20px 70px;
+
+  background-color: #f5c542;
+  color: #3b2a16;
+
+  border: 5px solid #3b2a16;
+  border-radius: 12px;
+
+  font-family: "Press Start 2P", cursive;
+  font-size: 22px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 0 #3b2a16,
+    0 12px 15px rgba(0, 0, 0, 0.3);
+
+  transition: 0.15s;
+}
+.cs-confirm:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #b8912f; }
+.cs-confirm:active { transform: translateY(2px); box-shadow: 0 2px 0 #b8912f; }
+
+.cs-hint {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  color: #8890a6;
+  font-size: 8px;
+  font-family: monospace;
+}
+
+@media (max-width: 520px) {
+  .cs-stage { gap: 24px; }
+  .cs-card { width: 140px; }
+  .cs-portrait-frame { width: 100px; height: 140px; }
+  .cs-title { font-size: 16px; }
+}

@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.historia {
+  width: 100vw;
+  height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding-bottom: 60px;
+}
+
+/* BALÃO DE FALA */
+
+.balao-fala {
+  width: 700px;
+  max-width: 85%;
+
+  background-color: white;
+  color: #292929;
+
+  padding: 30px 35px;
+
+  border: 5px solid #292929;
+  border-radius: 15px;
+
+  font-family: "Press Start 2P", cursive;
+  font-size: 16px;
+  line-height: 1.8;
+
+  text-align: center;
+
+  box-shadow: 8px 8px 0 #292929;
+
+  margin-bottom: 40px;
+
+  position: relative;
+}
+
+/* PONTINHA DO BALÃO */
+
+.balao-fala::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -25px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 25px solid #292929;
+}
+
+/* BOTÃO */
+
+.botao-historia {
+  padding: 18px 45px;
+
+  background-color: #f5c542;
+  color: #3b2a16;
+
+  border: 5px solid #3b2a16;
+  border-radius: 12px;
+
+  font-family: "Press Start 2P", cursive;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 0 #3b2a16;
+
+  transition: 0.15s;
+}
+
+.botao-historia:hover {
+  transform: translateY(-4px);
+
+  background-color: #ffd95a;
+
+  box-shadow: 0 12px 0 #3b2a16;
+}
+
+.botao-historia:active {
+  transform: translateY(5px);
+
+  box-shadow: 0 3px 0 #3b2a16;
+}
