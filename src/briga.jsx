@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./briga.css";
+import briga from "./assets/briga.png";
 
 function Briga() {
   const navigate = useNavigate();
 
   const continuar = () => {
-   
+
     navigate("/jogo");
   };
 

@@ -1,588 +1,437 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./jogo.css";
-
-// ==========================================
-// PERSONAGENS
-// ==========================================
-
 import Jonas from "./assets/Jonas2.png";
 import Agatha from "./assets/Agatha2.png";
-
-// ==========================================
-// FUNDOS
-// ==========================================
-
 import Fundo1 from "./assets/fundo6.png";
 import Fundo2 from "./assets/fundo2.png";
 import Fundo3 from "./assets/fundo3.png";
 import Fundo4 from "./assets/fundo4.png";
 import Fundo5 from "./assets/fundo5.png";
-
-// ==========================================
-// OBSTÁCULOS
-// ==========================================
-
 import Obstaculo1 from "./assets/obstaculo1.png";
 import Obstaculo2 from "./assets/obstaculo2.png";
-
-// ==========================================
-// SEMÁFORO
-// ==========================================
-
+import Obstaculo3 from "./assets/obstaculo3.png";
+import Obstaculo4 from "./assets/obstaculo4.png";
 import Semaforo from "./assets/semaforo.png";
+import musica1 from "./assets/musica1.mp3";
+import musica2 from "./assets/musica2.mp3";
+import musica3 from "./assets/musica3.mp3";
+import useMusicaFundoPlaylist from "./useMusicaFundoPlaylist";
 
 
-// ======================================================
-// CADA FUNDO APARECE DUAS VEZES
-// ======================================================
-
+const musicas = [
+  musica1,
+  musica2,
+  musica3
+];
 const fundos = [
   Fundo1,
   Fundo1,
-
   Fundo2,
   Fundo2,
-
   Fundo3,
   Fundo3,
-
   Fundo4,
   Fundo4,
-
   Fundo5,
-  Fundo5,
+  Fundo5
 ];
-
-
-// ======================================================
-// DUPLICAMOS A SEQUÊNCIA
-//
-// Isso é o que permite o fundo andar infinitamente
-// sem aparecer aquele "pulo" quando chega ao final.
-//
-// 1 1 2 2 3 3 4 4 5 5
-// 1 1 2 2 3 3 4 4 5 5
-// ======================================================
-
 const fundosVisuais = [
   ...fundos,
-  ...fundos,
+  ...fundos
 ];
-
-
+const imagensObstaculos = [
+  Obstaculo1,
+  Obstaculo2,
+  Obstaculo3,
+  Obstaculo4
+];
 function Jogo() {
-
   const navigate = useNavigate();
-
-
-  // ======================================================
-  // ESTADOS
-  // ======================================================
-
-  const [personagem, setPersonagem] = useState(Jonas);
-
-  const [pulando, setPulando] = useState(false);
-
-  const [pontos, setPontos] = useState(0);
-
-  const [vidas, setVidas] = useState(3);
-
-  const [nivel, setNivel] = useState(1);
-
-  const [jogoAtivo, setJogoAtivo] = useState(true);
-
-  const [mostrarNivel, setMostrarNivel] = useState(true);
-
-  // Obstáculo
-  const [obstaculo, setObstaculo] = useState(null);
-  const [obstaculoX, setObstaculoX] = useState(110);
-
-  // Semáforo
-  const [semaforo, setSemaforo] = useState(null);
-  const [semaforoX, setSemaforoX] = useState(110);
-  const [mostrarAviso, setMostrarAviso] = useState(false);
-
-
-  // ======================================================
-  // REFS
-  // ======================================================
-
-  const jogoAtivoRef = useRef(true);
-
-  const pulandoRef = useRef(false);
-
-  // ------------------------------------------
-  // FUNDO
-  // ------------------------------------------
-
-  const fundoXRef = useRef(0);
-
-  // Distância total percorrida.
-  // Nunca volta para zero.
-  const distanciaTotalRef = useRef(0);
-
-  // Guarda qual par já foi completado.
-  const parAtualRef = useRef(0);
-
-  // ------------------------------------------
-  // NÍVEL
-  // ------------------------------------------
-
-  const nivelRef = useRef(1);
-
-  // ------------------------------------------
-  // OBSTÁCULO
-  // ------------------------------------------
-
-  const obstaculoAtivoRef = useRef(false);
-
-  const obstaculoColidiuRef = useRef(false);
-
-  // ------------------------------------------
-  // SEMÁFORO
-  // ------------------------------------------
-
-  const semaforoAtivoRef = useRef(false);
-
-  const semaforoResolvidoRef = useRef(false);
-
-  // ------------------------------------------
-  // VIDA
-  // ------------------------------------------
-
-  const invulneravelRef = useRef(false);
-
-
-  // ======================================================
-  // PERSONAGEM
-  // ======================================================
-
+  useMusicaFundoPlaylist(musicas, {
+    volume: 0.4,
+    pausaEntreFaixas: 3000
+  });
+  const [personagem, setPersonagem] =
+    useState(Jonas);
+  const [pulando, setPulando] =
+    useState(false);
+  const [pontos, setPontos] =
+    useState(0);
+  const [vidas, setVidas] =
+    useState(3);
+  const [nivel, setNivel] =
+    useState(1);
+  const [jogoAtivo, setJogoAtivo] =
+    useState(true);
+  const [mostrarNivel, setMostrarNivel] =
+    useState(true);
+  const [mundoParado, setMundoParado] =
+    useState(false);
+  const [obstaculo, setObstaculo] =
+    useState(null);
+  const [semaforo, setSemaforo] =
+    useState(false);
+  const [semaforoX, setSemaforoX] =
+    useState(
+      window.innerWidth + 300
+    );
+  const [mostrarAviso, setMostrarAviso] =
+    useState(false);
+  const jogoAtivoRef =
+    useRef(true);
+  const mundoParadoRef =
+    useRef(false);
+  const pulandoRef =
+    useRef(false);
+  const invulneravelRef =
+    useRef(false);
+  const personagemRef =
+    useRef(null);
+  const obstaculoRef =
+    useRef(null);
+  const fundoXRef =
+    useRef(0);
+  const distanciaTotalRef =
+    useRef(0);
+  const nivelRef =
+    useRef(1);
+  const obstaculoAtivoRef =
+    useRef(false);
+  const obstaculoColidiuRef =
+    useRef(false);
+  const obstaculoPontuadoRef =
+    useRef(false);
+  const proximoObstaculoRef =
+    useRef(0);
+  const semaforoAtivoRef =
+    useRef(false);
+  const semaforoResolvidoRef =
+    useRef(false);
+  const semaforoParouRef =
+    useRef(false);
   useEffect(() => {
-
-    const salvo = localStorage.getItem("personagem");
-
-    if (salvo === "agatha") {
+    const personagemSalvo =
+      localStorage.getItem(
+        "personagem"
+      );
+    if (
+      personagemSalvo === "agatha"
+    ) {
       setPersonagem(Agatha);
     }
-
-    if (salvo === "jonas") {
+    if (
+      personagemSalvo === "jonas"
+    ) {
       setPersonagem(Jonas);
     }
-
   }, []);
-
-
-  // ======================================================
-  // AVISO INICIAL
-  // ======================================================
 
   useEffect(() => {
-
-    const timer = setTimeout(() => {
-
-      setMostrarNivel(false);
-
-    }, 2000);
-
-    return () => clearTimeout(timer);
-
+    const timer =
+      setTimeout(() => {
+        setMostrarNivel(false);
+      }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
-
-  // ======================================================
-  // PERDER VIDA
-  // ======================================================
-
-  const perderVida = () => {
-
-    if (!jogoAtivoRef.current) {
-      return;
-    }
-
-    if (invulneravelRef.current) {
-      return;
-    }
-
-    invulneravelRef.current = true;
-
-
-    setVidas((vidaAtual) => {
-
-      const novaVida = vidaAtual - 1;
-
-
-      // ==============================================
-      // ACABARAM AS VIDAS
-      // ==============================================
-
-      if (novaVida <= 0) {
-
-        jogoAtivoRef.current = false;
-
-        setJogoAtivo(false);
-
-
-        setTimeout(() => {
-
-          navigate("/briga");
-
-        }, 300);
-
-
-        return 0;
-      }
-
-
-      return novaVida;
-
-    });
-
-
-    // Pequeno período de proteção
-    setTimeout(() => {
-
-      invulneravelRef.current = false;
-
-    }, 700);
-
+  const calcularVelocidade = () => {
+    const velocidadeInicial = 3;
+    const aceleracao = 0.0006;
+    const velocidade =
+      velocidadeInicial +
+      distanciaTotalRef.current *
+      aceleracao;
+    return Math.min(
+      velocidade,
+      7
+    );
   };
 
 
-  // ======================================================
-  // VITÓRIA
-  // ======================================================
+  const perderVida = () => {
+    if (
+      !jogoAtivoRef.current
+    ) {
+      return;
+    }
 
+    if (
+      invulneravelRef.current
+    ) {
+      return;
+    }
+    invulneravelRef.current =
+      true;
+    setVidas((vidaAtual) => {
+      const novaVida =
+        vidaAtual - 1;
+      if (
+        novaVida <= 0
+      ) {
+
+        jogoAtivoRef.current =
+          false;
+
+        setJogoAtivo(false);
+        setTimeout(() => {
+          navigate("/perdeu");
+        }, 300);
+        return 0;
+      }
+      return novaVida;
+    });
+    setTimeout(() => {
+      invulneravelRef.current =
+        false;
+    }, 800);
+  };
   useEffect(() => {
-
     if (
       pontos >= 300 &&
       jogoAtivoRef.current
     ) {
-
-      jogoAtivoRef.current = false;
-
+      jogoAtivoRef.current =
+        false;
       setJogoAtivo(false);
-
       navigate("/vitoria");
-
     }
-
-  }, [pontos, navigate]);
-
-
-  // ======================================================
-  // PULO
-  // ======================================================
-
+  }, [
+    pontos,
+    navigate
+  ]);
   const pular = () => {
-
-    if (!jogoAtivoRef.current) {
+    if (
+      !jogoAtivoRef.current
+    ) {
       return;
     }
-
-    if (pulandoRef.current) {
+    if (
+      mundoParadoRef.current
+    ) {
       return;
     }
+    if (
+      pulandoRef.current
+    ) {
+      return;
 
-    pulandoRef.current = true;
-
+    }
+    pulandoRef.current =
+      true;
     setPulando(true);
-
-
     setTimeout(() => {
-
-      pulandoRef.current = false;
-
+      pulandoRef.current =
+        false;
       setPulando(false);
-
-    }, 700);
-
+    }, 650);
   };
-
-
-  // ======================================================
-  // TECLADO
-  // ======================================================
-
   useEffect(() => {
-
-    const tecla = (event) => {
-
-      if (!jogoAtivoRef.current) {
+    const handleKeyDown = (event) => {
+      if (
+        !jogoAtivoRef.current
+      ) {
         return;
       }
-
-
-      // ------------------------------------------
-      // ESPAÇO = PULAR
-      // ------------------------------------------
-
-      if (event.code === "Space") {
-
+      if (
+        event.code === "Space"
+      ) {
         event.preventDefault();
-
         pular();
+      }
+      if (
+        event.code === "Enter"
+      ) {
+        event.preventDefault();
+        if (
+          semaforoAtivoRef.current &&
+          mundoParadoRef.current &&
+          !semaforoResolvidoRef.current
+        ) {
+          semaforoResolvidoRef.current =
+            true;
+          semaforoParouRef.current =
+            false;
+          mundoParadoRef.current =
+            false;
+          setMundoParado(false);
+          setMostrarAviso(false);
+          setPontos(
+            valor => valor + 10
+          );
+        }
+      }
+    };
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+    };
+  }, []);
+  useEffect(() => {
+    if (!jogoAtivo) {
+      return;
+    }
+    let frame;
+    const atualizarJogo = () => {
+      if (
+        !jogoAtivoRef.current
+      ) {
+        return;
 
       }
+      if (
+        !mundoParadoRef.current
+      ) {
+        const largura =
+          window.innerWidth;
+        const velocidade =
+          calcularVelocidade();
+        distanciaTotalRef.current +=
+          velocidade;
+        fundoXRef.current -=
+          velocidade;
+        const larguraTotal =
+          fundos.length *
+          largura;
+        if (
+          Math.abs(
+            fundoXRef.current
+          ) >= larguraTotal
+        ) {
+
+          fundoXRef.current +=
+            larguraTotal;
+
+        }
 
 
-      // ------------------------------------------
-      // ENTER = SEMÁFORO
-      // ------------------------------------------
+        const cenarios =
+          document.querySelector(
+            ".cenarios"
+          );
 
-      if (event.code === "Enter") {
 
-        event.preventDefault();
+        if (cenarios) {
+
+          cenarios.style.transform =
+            `translate3d(${fundoXRef.current}px, 0, 0)`;
+
+        }
+
+
+
+
+        const novoNivel =
+          Math.floor(
+            distanciaTotalRef.current /
+            (largura * 2)
+          ) + 1;
 
 
         if (
-          semaforoAtivoRef.current &&
-          !semaforoResolvidoRef.current
+          novoNivel >
+          nivelRef.current
         ) {
 
-          const x = semaforoX;
+          nivelRef.current =
+            novoNivel;
 
 
-          // Zona correta
-          if (
-            x >= 15 &&
-            x <= 30
-          ) {
+          setNivel(
+            novoNivel
+          );
 
-            semaforoResolvidoRef.current = true;
 
-            setPontos(
-              (valor) => valor + 10
+          setMostrarNivel(
+            true
+          );
+
+
+          setTimeout(() => {
+
+            setMostrarNivel(
+              false
             );
 
-            setMostrarAviso(false);
+          }, 1800);
+
+        }
 
 
-            setTimeout(() => {
 
-              semaforoAtivoRef.current = false;
 
-              semaforoResolvidoRef.current = false;
+        if (
+          obstaculoAtivoRef.current
+        ) {
 
-              setSemaforo(null);
+          setObstaculo(
+            atual => {
 
-              setSemaforoX(110);
+              if (!atual) {
 
-            }, 700);
+                return atual;
 
-          }
+              }
+
+
+              return {
+
+                ...atual,
+
+                x:
+                  atual.x -
+                  velocidade
+
+              };
+
+            }
+          );
+
+        }
+
+
+
+
+        if (
+          semaforoAtivoRef.current
+        ) {
+
+          setSemaforoX(
+            x =>
+              x - velocidade
+          );
 
         }
 
       }
 
-    };
 
-
-    window.addEventListener(
-      "keydown",
-      tecla
-    );
-
-
-    return () => {
-
-      window.removeEventListener(
-        "keydown",
-        tecla
-      );
-
-    };
-
-  }, [semaforoX]);
-
-
-  // ======================================================
-  // MOVIMENTO DO FUNDO
-  // ======================================================
-
-  useEffect(() => {
-
-    if (!jogoAtivo) {
-      return;
-    }
-
-
-    let animationFrame;
-
-
-    const moverCenario = () => {
-
-      if (!jogoAtivoRef.current) {
-        return;
-      }
-
-
-      const largura =
-        window.innerWidth;
-
-
-      // ==================================================
-      // VELOCIDADE
-      //
-      // Conforme o nível aumenta,
-      // o cenário fica um pouco mais rápido.
-      // ==================================================
-
-      const velocidadeBase = 3;
-
-      const velocidadeExtra =
-        (nivelRef.current - 1) * 0.35;
-
-      const velocidade =
-        velocidadeBase + velocidadeExtra;
-
-
-      // ==================================================
-      // MOVIMENTO
-      // ==================================================
-
-      const novaPosicao =
-        fundoXRef.current - velocidade;
-
-
-      fundoXRef.current =
-        novaPosicao;
-
-
-      distanciaTotalRef.current +=
-        velocidade;
-
-
-      // ==================================================
-      // QUANDO TERMINA UM PAR
-      //
-      // Cada fundo ocupa uma tela.
-      //
-      // Dois fundos = 2 × largura da tela.
-      //
-      // Portanto:
-      //
-      // 0 → 2 telas = nível 2
-      // 2 → 4 telas = nível 3
-      // 4 → 6 telas = nível 4
-      // ==================================================
-
-      const distanciaPorPar =
-        largura * 2;
-
-
-      const parAtual =
-        Math.floor(
-          distanciaTotalRef.current /
-          distanciaPorPar
-        );
-
-
-      if (
-        parAtual > parAtualRef.current
-      ) {
-
-        parAtualRef.current =
-          parAtual;
-
-
-        const novoNivel =
-          parAtual + 1;
-
-
-        nivelRef.current =
-          novoNivel;
-
-
-        setTimeout(() => {
-
-          if (!jogoAtivoRef.current) {
-            return;
-          }
-
-          setNivel(novoNivel);
-
-          setMostrarNivel(true);
-
-
-          setTimeout(() => {
-
-            setMostrarNivel(false);
-
-          }, 1800);
-
-        }, 1000);
-
-      }
-
-
-      // ==================================================
-      // LOOP INFINITO
-      //
-      // Temos duas sequências iguais:
-      //
-      // [A B C] [A B C]
-      //
-      // Quando a primeira termina,
-      // retiramos exatamente o tamanho dela.
-      //
-      // Visualmente o jogador não percebe.
-      // ==================================================
-
-      const larguraSequencia =
-        fundos.length * largura;
-
-
-      if (
-        Math.abs(novaPosicao) >=
-        larguraSequencia
-      ) {
-
-        fundoXRef.current =
-          novaPosicao +
-          larguraSequencia;
-
-      }
-
-
-      // ==================================================
-      // APLICA O MOVIMENTO
-      // ==================================================
-
-      const cenarios =
-        document.querySelector(
-          ".cenarios"
-        );
-
-
-      if (cenarios) {
-
-        cenarios.style.transform =
-          `translate3d(${fundoXRef.current}px, 0, 0)`;
-
-      }
-
-
-      animationFrame =
+      frame =
         requestAnimationFrame(
-          moverCenario
+          atualizarJogo
         );
 
     };
 
 
-    animationFrame =
+    frame =
       requestAnimationFrame(
-        moverCenario
+        atualizarJogo
       );
 
 
     return () => {
 
       cancelAnimationFrame(
-        animationFrame
+        frame
       );
 
     };
@@ -590,43 +439,84 @@ function Jogo() {
   }, [jogoAtivo]);
 
 
-  // ======================================================
-  // CRIAR OBSTÁCULO
-  // ======================================================
+
 
   useEffect(() => {
 
     if (!jogoAtivo) {
+
       return;
+
     }
 
 
-    const intervalo =
-      setInterval(() => {
-
-        if (!jogoAtivoRef.current) {
-          return;
-        }
-
-        if (obstaculoAtivoRef.current) {
-          return;
-        }
+    let timeout;
 
 
-        // Não deixa obstáculos aparecerem
-        // em sequência o tempo todo.
+    const criarObstaculo =
+      () => {
 
         if (
-          Math.random() > 0.55
+          !jogoAtivoRef.current
         ) {
+
           return;
+
         }
+
+
+        if (
+          mundoParadoRef.current
+        ) {
+
+          timeout =
+            setTimeout(
+              criarObstaculo,
+              400
+            );
+
+          return;
+
+        }
+
+
+
+
+        if (
+          obstaculoAtivoRef.current
+        ) {
+
+          timeout =
+            setTimeout(
+              criarObstaculo,
+              300
+            );
+
+          return;
+
+        }
+
+
+
+
+        const indice =
+          proximoObstaculoRef.current;
 
 
         const imagem =
-          Math.random() < 0.5
-            ? Obstaculo1
-            : Obstaculo2;
+          imagensObstaculos[
+          indice
+          ];
+
+
+
+
+        proximoObstaculoRef.current =
+          (
+            indice + 1
+          ) %
+          imagensObstaculos.length;
+
 
 
         obstaculoAtivoRef.current =
@@ -635,213 +525,354 @@ function Jogo() {
         obstaculoColidiuRef.current =
           false;
 
+        obstaculoPontuadoRef.current =
+          false;
 
-        setObstaculo(imagem);
 
-        setObstaculoX(110);
 
-      }, 1700);
+
+        setObstaculo({
+
+          imagem: imagem,
+
+          x:
+            window.innerWidth + 180
+
+        });
+
+
+
+
+        const dificuldade =
+          Math.min(
+            distanciaTotalRef.current /
+            12000,
+            1
+          );
+
+
+        const intervalo =
+          1800 -
+          (
+            1800 -
+            850
+          ) *
+          dificuldade;
+
+
+        timeout =
+          setTimeout(
+            criarObstaculo,
+            intervalo
+          );
+
+      };
+
+
+    timeout =
+      setTimeout(
+        criarObstaculo,
+        1200
+      );
 
 
     return () => {
 
-      clearInterval(intervalo);
+      clearTimeout(
+        timeout
+      );
 
     };
 
-  }, [jogoAtivo]);
+  }, [jogoAtivo, obstaculo]);
 
 
-  // ======================================================
-  // MOVIMENTO DO OBSTÁCULO
-  // ======================================================
 
   useEffect(() => {
 
     if (!jogoAtivo) {
+
       return;
+
     }
 
 
-    let animationFrame;
+    let frame;
 
 
-    const moverObstaculo = () => {
+    const verificarColisao =
+      () => {
 
-      if (!jogoAtivoRef.current) {
-        return;
-      }
+        if (
+          !jogoAtivoRef.current
+        ) {
 
+          return;
 
-      if (
-        obstaculoAtivoRef.current
-      ) {
-
-        setObstaculoX((xAtual) => {
+        }
 
 
-          // ==============================================
-          // OBSTÁCULO FICA MAIS RÁPIDO COM O NÍVEL
-          // ==============================================
+        if (
+          mundoParadoRef.current
+        ) {
 
-          const velocidade =
-            0.75 +
-            (nivelRef.current - 1) * 0.08;
+          frame =
+            requestAnimationFrame(
+              verificarColisao
+            );
 
+          return;
 
-          const novoX =
-            xAtual - velocidade;
-
-
-          // ==============================================
-          // SAIU DA TELA
-          // ==============================================
-
-          if (novoX < -15) {
+        }
 
 
-            if (
-              !obstaculoColidiuRef.current
-            ) {
+        if (
+          !obstaculoAtivoRef.current
+        ) {
 
-              setPontos(
-                (valor) => valor + 10
-              );
+          frame =
+            requestAnimationFrame(
+              verificarColisao
+            );
 
-            }
+          return;
 
-
-            obstaculoAtivoRef.current =
-              false;
-
-            obstaculoColidiuRef.current =
-              false;
-
-            setObstaculo(null);
-
-            return 110;
-
-          }
+        }
 
 
-          // ==============================================
-          // COLISÃO
-          //
-          // Usamos uma área menor,
-          // evitando a parte transparente da PNG.
-          // ==============================================
+        const personagemElemento =
+          personagemRef.current;
 
-          if (
-            !pulandoRef.current &&
-            !obstaculoColidiuRef.current
-          ) {
-
-            // Personagem
-            const personagemLeft =
-              18.8;
-
-            const personagemRight =
-              23.5;
+        const obstaculoElemento =
+          obstaculoRef.current;
 
 
-            // Obstáculo
-            const obstaculoLeft =
-              novoX + 2;
+        if (
+          !personagemElemento ||
+          !obstaculoElemento
+        ) {
 
-            const obstaculoRight =
-              novoX + 6;
+          frame =
+            requestAnimationFrame(
+              verificarColisao
+            );
 
+          return;
 
-            const bateu =
-              personagemLeft <
-                obstaculoRight &&
-              personagemRight >
-                obstaculoLeft;
-
-
-            if (bateu) {
-
-              obstaculoColidiuRef.current =
-                true;
+        }
 
 
-              obstaculoAtivoRef.current =
-                false;
+
+        if (
+          pulandoRef.current
+        ) {
+
+          frame =
+            requestAnimationFrame(
+              verificarColisao
+            );
+
+          return;
+
+        }
 
 
-              setObstaculo(null);
+        const personagemRect =
+          personagemElemento
+            .getBoundingClientRect();
 
 
-              perderVida();
+        const obstaculoRect =
+          obstaculoElemento
+            .getBoundingClientRect();
 
 
-              return 110;
-
-            }
-
-          }
 
 
-          return novoX;
+        const margemPersonagem =
+          10;
 
-        });
-
-      }
-
-
-      animationFrame =
-        requestAnimationFrame(
-          moverObstaculo
-        );
-
-    };
+        const margemObstaculo =
+          5;
 
 
-    animationFrame =
+        const personagemLeft =
+          personagemRect.left +
+          margemPersonagem;
+
+        const personagemRight =
+          personagemRect.right -
+          margemPersonagem;
+
+        const personagemTop =
+          personagemRect.top +
+          margemPersonagem;
+
+        const personagemBottom =
+          personagemRect.bottom -
+          margemPersonagem;
+
+
+        const obstaculoLeft =
+          obstaculoRect.left +
+          margemObstaculo;
+
+        const obstaculoRight =
+          obstaculoRect.right -
+          margemObstaculo;
+
+        const obstaculoTop =
+          obstaculoRect.top +
+          margemObstaculo;
+
+        const obstaculoBottom =
+          obstaculoRect.bottom -
+          margemObstaculo;
+
+
+
+        const bateu =
+          personagemLeft <
+          obstaculoRight &&
+          personagemRight >
+          obstaculoLeft &&
+          personagemTop <
+          obstaculoBottom &&
+          personagemBottom >
+          obstaculoTop;
+
+
+        if (
+          bateu &&
+          !obstaculoColidiuRef.current
+        ) {
+
+          obstaculoColidiuRef.current =
+            true;
+
+          obstaculoAtivoRef.current =
+            false;
+
+
+          setObstaculo(
+            null
+          );
+
+
+          perderVida();
+
+        }
+
+
+
+        if (
+          obstaculoRect.right <
+          personagemRect.left &&
+          !obstaculoPontuadoRef.current
+        ) {
+
+          obstaculoPontuadoRef.current =
+            true;
+
+
+          setPontos(
+            valor =>
+              valor + 10
+          );
+
+        }
+
+
+
+
+        if (
+          obstaculoRect.right <
+          -100
+        ) {
+
+          obstaculoAtivoRef.current =
+            false;
+
+          obstaculoColidiuRef.current =
+            false;
+
+          obstaculoPontuadoRef.current =
+            false;
+
+
+          setObstaculo(
+            null
+          );
+
+        }
+
+
+        frame =
+          requestAnimationFrame(
+            verificarColisao
+          );
+
+      };
+
+
+    frame =
       requestAnimationFrame(
-        moverObstaculo
+        verificarColisao
       );
 
 
     return () => {
 
       cancelAnimationFrame(
-        animationFrame
+        frame
       );
 
     };
 
-  }, [jogoAtivo]);
+  }, [
+    jogoAtivo,
+    obstaculo
+  ]);
 
-
-  // ======================================================
-  // CRIAR SEMÁFORO
-  // ======================================================
 
   useEffect(() => {
 
     if (!jogoAtivo) {
+
       return;
+
     }
 
 
     const intervalo =
       setInterval(() => {
 
-        if (!jogoAtivoRef.current) {
-          return;
-        }
-
-        if (semaforoAtivoRef.current) {
-          return;
-        }
-
-
-        // Chance de aparecer
         if (
-          Math.random() > 0.30
+          !jogoAtivoRef.current
         ) {
+
           return;
+
+        }
+
+
+        if (
+          semaforoAtivoRef.current
+        ) {
+
+          return;
+
+        }
+
+
+
+        if (
+          Math.random() >
+          0.30
+        ) {
+
+          return;
+
         }
 
 
@@ -851,133 +882,206 @@ function Jogo() {
         semaforoResolvidoRef.current =
           false;
 
+        semaforoParouRef.current =
+          false;
 
-        setSemaforo(Semaforo);
 
-        setSemaforoX(110);
+        setSemaforo(
+          true
+        );
 
-        setMostrarAviso(true);
 
-      }, 4200);
+        setSemaforoX(
+          window.innerWidth + 300
+        );
+
+      }, 4500);
 
 
     return () => {
 
-      clearInterval(intervalo);
+      clearInterval(
+        intervalo
+      );
 
     };
 
   }, [jogoAtivo]);
 
 
-  // ======================================================
-  // MOVIMENTO DO SEMÁFORO
-  // ======================================================
+
 
   useEffect(() => {
 
     if (!jogoAtivo) {
+
       return;
+
     }
 
 
-    let animationFrame;
+    const verificar =
+      setInterval(() => {
+
+        if (
+          !semaforoAtivoRef.current
+        ) {
+
+          return;
+
+        }
 
 
-    const moverSemaforo = () => {
+        if (
+          semaforoResolvidoRef.current
+        ) {
 
-      if (!jogoAtivoRef.current) {
-        return;
-      }
+          return;
 
-
-      if (
-        semaforoAtivoRef.current &&
-        !semaforoResolvidoRef.current
-      ) {
-
-        setSemaforoX((xAtual) => {
+        }
 
 
-          const velocidade =
-            0.62 +
-            (nivelRef.current - 1) * 0.05;
+        if (
+          semaforoParouRef.current
+        ) {
+
+          return;
+
+        }
 
 
-          const novoX =
-            xAtual - velocidade;
+        const largura =
+          window.innerWidth;
 
 
-          // ==============================================
-          // PASSOU SEM APERTAR ENTER
-          // ==============================================
-
-          if (novoX < -15) {
-
-            semaforoAtivoRef.current =
-              false;
-
-            semaforoResolvidoRef.current =
-              false;
+        const personagemX =
+          largura * 0.21;
 
 
-            setSemaforo(null);
-
-            setMostrarAviso(false);
-
-
-            perderVida();
-
-
-            return 110;
-
-          }
+        const distancia =
+          Math.abs(
+            semaforoX -
+            personagemX
+          );
 
 
-          return novoX;
 
-        });
+        if (
+          distancia < 90
+        ) {
 
-      }
-
-
-      animationFrame =
-        requestAnimationFrame(
-          moverSemaforo
-        );
-
-    };
+          semaforoParouRef.current =
+            true;
 
 
-    animationFrame =
-      requestAnimationFrame(
-        moverSemaforo
-      );
+          mundoParadoRef.current =
+            true;
+
+
+          setMundoParado(
+            true
+          );
+
+
+          setMostrarAviso(
+            true
+          );
+
+        }
+
+
+
+
+        if (
+          semaforoX < -180
+        ) {
+
+          semaforoAtivoRef.current =
+            false;
+
+          semaforoResolvidoRef.current =
+            false;
+
+          semaforoParouRef.current =
+            false;
+
+
+          setSemaforo(
+            false
+          );
+
+
+          setMostrarAviso(
+            false
+          );
+
+
+          perderVida();
+
+        }
+
+      }, 16);
 
 
     return () => {
 
-      cancelAnimationFrame(
-        animationFrame
+      clearInterval(
+        verificar
       );
 
     };
 
-  }, [jogoAtivo]);
+  }, [
+    jogoAtivo,
+    semaforoX
+  ]);
 
 
-  // ======================================================
-  // RENDER
-  // ======================================================
+
+
+  useEffect(() => {
+
+    if (
+      semaforo &&
+      semaforoResolvidoRef.current &&
+      semaforoX < -180
+    ) {
+
+      semaforoAtivoRef.current =
+        false;
+
+      semaforoResolvidoRef.current =
+        false;
+
+      semaforoParouRef.current =
+        false;
+
+
+      setSemaforo(
+        false
+      );
+
+    }
+
+  }, [
+    semaforo,
+    semaforoX
+  ]);
+
+
+
 
   return (
 
-    <div className="jogo">
+    <div
+      className={
+        mundoParado
+          ? "jogo mundo-parado"
+          : "jogo"
+      }
+    >
 
 
-      {/* ================================================
-          CENÁRIO
-      ================================================= */}
 
       <div className="cenarios">
 
@@ -1004,93 +1108,88 @@ function Jogo() {
       </div>
 
 
-      {/* ================================================
-          HUD
-      ================================================= */}
+
 
       <div className="hud">
 
         <div className="pontuacao">
+
           ⭐ {pontos}
+
         </div>
 
+
         <div className="vidas">
+
           ❤️ {vidas}
+
         </div>
 
       </div>
 
 
-      {/* ================================================
-          PERSONAGEM
-      ================================================= */}
-
       <img
+        ref={personagemRef}
         src={personagem}
         alt="Personagem"
-        draggable="false"
         className={
           pulando
             ? "personagem-jogo personagem-pulando"
             : "personagem-jogo"
         }
+        draggable="false"
       />
 
 
-      {/* ================================================
-          OBSTÁCULO
-      ================================================= */}
 
       {obstaculo && (
 
         <img
-          src={obstaculo}
+          ref={obstaculoRef}
+          src={obstaculo.imagem}
           alt="Obstáculo"
-          draggable="false"
           className="obstaculo-jogo"
           style={{
-            left: `${obstaculoX}%`,
+            left:
+              `${obstaculo.x}px`
           }}
+          draggable="false"
         />
 
       )}
-
-
-      {/* ================================================
-          SEMÁFORO
-      ================================================= */}
 
       {semaforo && (
 
         <img
-          src={semaforo}
+          src={Semaforo}
           alt="Semáforo"
-          draggable="false"
           className="semaforo-jogo"
           style={{
-            left: `${semaforoX}%`,
+            left:
+              `${semaforoX}px`
           }}
+          draggable="false"
         />
 
       )}
 
-
-      {/* ================================================
-          AVISO DO SEMÁFORO
-      ================================================= */}
-
-      {mostrarAviso && semaforo && (
+      {mostrarAviso && (
 
         <div className="aviso-semaforo">
-          PRESSIONE ENTER!
+
+          🚦
+
+          <br />
+
+          PRESSIONE ENTER
+
+          <br />
+
+          PARA CONTINUAR
+
         </div>
 
       )}
-
-
-      {/* ================================================
-          NÍVEL
-      ================================================= */}
 
       {mostrarNivel && (
 
@@ -1111,5 +1210,6 @@ function Jogo() {
   );
 
 }
+
 
 export default Jogo;

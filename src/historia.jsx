@@ -18,7 +18,7 @@ function Historia() {
       </div>
 
       <button
-        className="botao-seguir"
+        className="botao-historia"
         onClick={() => navigate("/historia2")}
       >
         ▶ CONTINUAR

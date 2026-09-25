@@ -1,10 +1,10 @@
-import "./vitoria.css";
+import "./vitoria2.css";
 
 import FundoVitoria from "./assets/fundoVitoria.png";
-import JonasVitoria from "./assets/jonasVitoria.png";
+import AgathaVitoria from "./assets/agathaVitoria.png";
 import Policiais from "./assets/policiaisVitoria.png";
 
-export default function Vitoria() {
+export default function Vitoria2() {
   return (
     <main className="tela-vitoria">
       <div className="palco">
@@ -16,10 +16,11 @@ export default function Vitoria() {
           draggable={false}
         />
 
+
         <img
-          src={JonasVitoria}
-          alt="Jonas comemorando a vitória"
-          className="jonas-vitoria"
+          src={AgathaVitoria}
+          alt="Agatha comemorando a vitória"
+          className="agatha-vitoria"
           draggable={false}
         />
 

@@ -9,7 +9,7 @@ function Historia2() {
 
   return (
     <div
-      className="historia"
+      className="historia2"
       style={{ backgroundImage: `url(${fundo})` }}
     >
 
@@ -18,7 +18,7 @@ function Historia2() {
       </div>
 
       <button
-        className="botao-continuar"
+        className="botao-historia"
         onClick={() => navigate("/jogo")}
       >
         ▶ SEGUIR JOGO

@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-.historia {
+.historia2 {
   width: 100vw;
   height: 100vh;
 
@@ -22,7 +22,6 @@
   padding-bottom: 60px;
 }
 
-/* BALÃO DE FALA */
 
 .balao-fala {
   width: 700px;
@@ -49,7 +48,6 @@
   position: relative;
 }
 
-/* PONTINHA DO BALÃO */
 
 .balao-fala::after {
   content: "";
@@ -66,7 +64,6 @@
   border-top: 25px solid #292929;
 }
 
-/* BOTÃO */
 
 .botao-historia {
   padding: 18px 45px;

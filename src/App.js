@@ -8,15 +8,18 @@ import EscolherPersonagem from "./escolher_personagem";
 import Historia from "./historia";
 import Jogo from "./jogo";
 import Vitoria from "./vitoria";
+import Vitoria2 from "./vitoria2";
 import Briga from "./briga";
+import Historia2 from "./historia2";
+import Perdeu from "./perdeu";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        <Route path="/briga" 
-        element={<Briga />} />
+        <Route path="/briga"
+          element={<Briga />} />
 
         <Route
           path="/"
@@ -38,12 +41,28 @@ function App() {
           element={<Jogo />}
         />
 
-        <Route path="/vitoria" 
-        element={<Vitoria />} />
+        <Route path="/vitoria"
+          element={<Vitoria />}
+        />
+
+        <Route path="/vitoria2"
+          element={<Vitoria2 />}
+        />
+
+        <Route
+          path="/historia2"
+          element={<Historia2 />}
+        />
+
+        <Route
+          path="/perdeu"
+          element={<Perdeu />}
+        />
+
       </Routes>
     </BrowserRouter>
 
-    
+
   );
 }
 

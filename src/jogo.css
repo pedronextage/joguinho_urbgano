@@ -1,495 +1,458 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
+ 
+ 
 * {
+
   box-sizing: border-box;
+
 }
-
-
+ 
 html,
+
 body,
+
 #root {
+
   margin: 0;
+
   padding: 0;
-
+ 
   width: 100%;
+
   height: 100%;
-
+ 
   overflow: hidden;
+
 }
-
-
-/* =====================================================
-   JOGO
-===================================================== */
-
+ 
 .jogo {
+
   position: relative;
-
+ 
   width: 100vw;
+
   height: 100vh;
-
+ 
   overflow: hidden;
-
-  background: #6db6d9;
-
+ 
+  background: #75bde0;
+ 
   image-rendering: pixelated;
+
 }
-
-
-/* =====================================================
-   CENÁRIO
-===================================================== */
-
+ 
 .cenarios {
 
   position: absolute;
-
+ 
   top: 0;
+
   left: 0;
-
+ 
   display: flex;
-
-  /*
-    Temos 20 imagens.
-
-    10 originais
-    +
-    10 duplicadas
-
-    Isso permite fazer o loop sem
-    aquele salto no final.
-  */
-
+ 
   width: 2000vw;
 
   height: 100vh;
-
+ 
   will-change: transform;
-
+ 
   transform: translate3d(0, 0, 0);
+
 }
-
-
-/* =====================================================
-   CADA FUNDO
-===================================================== */
-
+ 
 .cenario {
 
   position: relative;
-
+ 
   flex: 0 0 100vw;
-
+ 
   width: 100vw;
+
   height: 100vh;
-
+ 
   overflow: hidden;
+
 }
-
-
-/* =====================================================
-   IMAGEM DO FUNDO
-===================================================== */
 
 .fundo-jogo {
 
   position: absolute;
-
+ 
   top: 0;
+
   left: 0;
-
+ 
   width: 100%;
+
   height: 100%;
-
-  /*
-    Mantém o cenário preenchendo a tela.
-  */
-
+ 
   object-fit: cover;
-
+ 
   image-rendering: pixelated;
+ 
+  display: block;
+ 
+  pointer-events: none;
 
   user-select: none;
 
-  pointer-events: none;
-
-  display: block;
 }
-
-
-/* =====================================================
-   HUD
-===================================================== */
-
+ 
 .hud {
 
   position: fixed;
-
+ 
   top: 25px;
+
   left: 25px;
-
+ 
   z-index: 5000;
-
+ 
   display: flex;
 
   flex-direction: column;
-
+ 
   gap: 12px;
-
+ 
   font-family:
+
     "Press Start 2P",
+
     monospace;
-
+ 
   color: white;
-
+ 
   text-shadow:
-    3px 3px 0 #000,
-    -1px -1px 0 #000;
+
+    3px 3px 0 black,
+
+    -1px -1px 0 black;
+
 }
-
-
-/* =====================================================
-   PONTOS
-===================================================== */
-
-.pontuacao {
-
-  font-size: 20px;
-
-  white-space: nowrap;
-}
-
-
-/* =====================================================
-   VIDAS
-===================================================== */
+ 
+.pontuacao,
 
 .vidas {
 
   font-size: 20px;
-
+ 
   white-space: nowrap;
+
 }
-
-
-/* =====================================================
-   PERSONAGEM
-===================================================== */
-
+ 
 .personagem-jogo {
 
   position: fixed;
-
+ 
   left: 18%;
-
-  /*
-    Mantém os pés do personagem
-    próximos da pista.
-  */
-
+ 
   bottom: 11%;
-
+ 
   width: 100px;
-
+ 
   z-index: 1000;
-
+ 
   image-rendering: pixelated;
-
-  user-select: none;
-
+ 
   pointer-events: none;
 
-  /*
-    Evita o personagem ficar
-    tremendo durante o movimento.
-  */
-
+  user-select: none;
+ 
   will-change: transform;
+
 }
-
-
-/* =====================================================
-   PULO
-===================================================== */
-
+ 
 .personagem-pulando {
 
   animation:
+
     pulo-personagem
+
     0.7s
+
     ease-out;
+
+} 
+.mundo-parado
+
+.personagem-pulando {
+
+  animation-play-state: paused;
+
 }
-
-
+ 
+ 
 @keyframes pulo-personagem {
-
+ 
   0% {
 
-    transform:
-      translateY(0);
+    transform: translateY(0);
 
   }
-
+ 
   30% {
 
-    transform:
-      translateY(-145px);
+    transform: translateY(-145px);
 
   }
-
+ 
   55% {
 
-    transform:
-      translateY(-160px);
+    transform: translateY(-160px);
 
   }
-
+ 
   100% {
 
-    transform:
-      translateY(0);
+    transform: translateY(0);
 
   }
-
+ 
 }
-
-
-/* =====================================================
-   OBSTÁCULO
-===================================================== */
-
+ 
+ 
 .obstaculo-jogo {
 
   position: fixed;
-
+ 
   bottom: 11%;
-
+ 
   width: 90px;
+
   height: 90px;
-
+ 
   object-fit: contain;
-
+ 
   z-index: 900;
-
+ 
   image-rendering: pixelated;
-
-  user-select: none;
-
+ 
   pointer-events: none;
 
+  user-select: none;
+ 
   will-change: left;
+
 }
-
-
-/* =====================================================
-   SEMÁFORO
-===================================================== */
-
+ 
+ 
 .semaforo-jogo {
 
   position: fixed;
-
+ 
   bottom: 11%;
-
+ 
   width: 100px;
+
   height: 150px;
-
+ 
   object-fit: contain;
-
+ 
   z-index: 950;
-
+ 
   image-rendering: pixelated;
-
-  user-select: none;
-
+ 
   pointer-events: none;
 
+  user-select: none;
+ 
   will-change: left;
+
 }
-
-
-/* =====================================================
-   AVISO DO SEMÁFORO
-===================================================== */
+ 
+ 
 
 .aviso-semaforo {
 
   position: fixed;
-
+ 
   left: 50%;
 
-  bottom: 34%;
-
-  transform:
-    translateX(-50%);
-
+  bottom: 32%;
+ 
+  transform: translateX(-50%);
+ 
   z-index: 6000;
-
-  padding:
-    16px 25px;
-
+ 
+  padding: 15px 25px;
+ 
   background:
-    rgba(0, 0, 0, 0.88);
 
+    rgba(0, 0, 0, 0.9);
+ 
   border:
+
     4px solid white;
-
+ 
   color: white;
-
+ 
   font-family:
+
     "Press Start 2P",
+
     monospace;
-
-  font-size: 15px;
-
+ 
+  font-size: 14px;
+ 
+  line-height: 1.8;
+ 
   text-align: center;
-
+ 
   white-space: nowrap;
-
+ 
   text-shadow:
+
     3px 3px 0 black;
-
+ 
   box-shadow:
+
     6px 6px 0 black;
-
+ 
   animation:
+
     piscar
+
     0.5s
-    infinite
-    alternate;
+
+    infinite alternate;
+
 }
-
-
+ 
+ 
 @keyframes piscar {
-
+ 
   from {
+
     opacity: 1;
-  }
 
+  }
+ 
   to {
-    opacity: 0.5;
+
+    opacity: 0.55;
+
   }
-
+ 
 }
+ 
 
-
-/* =====================================================
-   AVISO DE NÍVEL
-===================================================== */
-
+ 
 .legenda-nivel {
 
   position: fixed;
-
+ 
   top: 50%;
+
   left: 50%;
-
+ 
   width: 100vw;
-
+ 
   transform:
+
     translate(-50%, -50%);
-
+ 
   z-index: 10000;
-
+ 
   display: flex;
-
+ 
   align-items: center;
 
   justify-content: center;
-
+ 
   pointer-events: none;
+
 }
-
-
+ 
+ 
 .texto-nivel {
 
   padding:
+
     28px 50px;
-
+ 
   background:
+
     rgba(0, 0, 0, 0.9);
-
+ 
   color: white;
-
+ 
   border:
+
     5px solid white;
-
+ 
   box-shadow:
+
     9px 9px 0 black;
-
+ 
   font-family:
+
     "Press Start 2P",
+
     monospace;
-
+ 
   font-size: 32px;
-
+ 
   text-align: center;
-
+ 
   text-shadow:
+
     4px 4px 0 black;
-
+ 
   white-space: nowrap;
-
+ 
   animation:
+
     nivel-aparecer
+
     1.8s
+
     ease-in-out
+
     forwards;
+
 }
-
-
+ 
+ 
 @keyframes nivel-aparecer {
-
+ 
   0% {
 
     opacity: 0;
 
-    transform:
-      scale(0.7);
+    transform: scale(0.7);
 
   }
-
+ 
   15% {
 
     opacity: 1;
 
-    transform:
-      scale(1);
+    transform: scale(1);
 
   }
-
+ 
   80% {
 
     opacity: 1;
 
-    transform:
-      scale(1);
+    transform: scale(1);
 
   }
-
+ 
   100% {
 
     opacity: 0;
 
-    transform:
-      scale(1.05);
+    transform: scale(1.05);
 
   }
-
+ 
 }
-
-
-/* =====================================================
-   RESPONSIVO
-===================================================== */
+ 
 
 @media (max-width: 700px) {
-
+ 
   .hud {
 
     top: 15px;
@@ -497,16 +460,17 @@ body,
     left: 15px;
 
     gap: 8px;
+
   }
-
-
+ 
   .pontuacao,
+
   .vidas {
 
     font-size: 13px;
+
   }
-
-
+ 
   .personagem-jogo {
 
     left: 18%;
@@ -514,9 +478,9 @@ body,
     bottom: 11%;
 
     width: 75px;
+
   }
-
-
+ 
   .obstaculo-jogo {
 
     bottom: 11%;
@@ -524,9 +488,9 @@ body,
     width: 65px;
 
     height: 65px;
+
   }
-
-
+ 
   .semaforo-jogo {
 
     bottom: 11%;
@@ -534,72 +498,74 @@ body,
     width: 70px;
 
     height: 110px;
+
   }
-
-
+ 
   .aviso-semaforo {
 
     bottom: 32%;
-
+ 
     padding:
+
       10px 15px;
-
-    font-size: 10px;
-
+ 
+    font-size: 9px;
+ 
     border-width: 3px;
+
   }
-
-
+ 
   .texto-nivel {
 
     padding:
+
       20px 25px;
-
+ 
     font-size: 20px;
-
+ 
     border-width: 4px;
-
+ 
     box-shadow:
+
       6px 6px 0 black;
+
   }
-
+ 
 }
-
-
-/* =====================================================
-   TELAS BAIXAS
-===================================================== */
-
+ 
 @media (max-height: 500px) {
-
+ 
   .personagem-jogo {
 
     width: 70px;
+
   }
-
-
+ 
   .obstaculo-jogo {
 
     width: 60px;
 
     height: 60px;
+
   }
-
-
+ 
   .semaforo-jogo {
 
     width: 65px;
 
     height: 95px;
+
   }
-
-
+ 
   .texto-nivel {
 
     padding:
+
       15px 20px;
-
+ 
     font-size: 16px;
-  }
 
+  }
+ 
 }
+ 
