@@ -829,7 +829,7 @@ function Jogo() {
 
     };
 
-  }, [
+  }; [
     jogoAtivo,
     obstaculo
   ]);
@@ -1031,7 +1031,7 @@ function Jogo() {
 
     };
 
-  }, [
+  }; [
     jogoAtivo,
     semaforoX
   ]);
