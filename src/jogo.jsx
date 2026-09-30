@@ -829,7 +829,7 @@ function Jogo() {
 
     };
 
-  }, [
+  , [
     jogoAtivo,
     obstaculo
   ]);
