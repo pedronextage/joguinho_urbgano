@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./jogo.css";
 import Jonas from "./assets/Jonas2.png";
@@ -151,7 +151,7 @@ function Jogo() {
   };
 
 
-  const perderVida = () => {
+  const perderVida = useCallback(() => {
     if (
       !jogoAtivoRef.current
     ) {
@@ -187,7 +187,7 @@ function Jogo() {
       invulneravelRef.current =
         false;
     }, 800);
-  };
+  }, [navigate]);
   useEffect(() => {
     if (
       pontos >= 300 &&
@@ -831,7 +831,8 @@ function Jogo() {
 
   }, [
     jogoAtivo,
-    obstaculo
+    obstaculo,
+    perderVida
   ]);
 
 
@@ -1033,7 +1034,8 @@ function Jogo() {
 
   }, [
     jogoAtivo,
-    semaforoX
+    semaforoX,
+    perderVida
   ]);
 
 
