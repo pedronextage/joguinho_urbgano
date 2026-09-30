@@ -9,7 +9,7 @@ import Historia from "./historia";
 import Jogo from "./jogo";
 import Vitoria from "./vitoria";
 import Vitoria2 from "./vitoria2";
-import Briga from "./briga";
+
 import Historia2 from "./historia2";
 import Perdeu from "./perdeu";
 
@@ -18,8 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/briga"
-          element={<Briga />} />
+       
 
         <Route
           path="/"
