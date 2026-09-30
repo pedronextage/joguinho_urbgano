@@ -833,7 +833,7 @@ function Jogo() {
     jogoAtivo,
     obstaculo
   ]);
-}
+
 
   useEffect(() => {
 
