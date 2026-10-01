@@ -1,6 +1,6 @@
 import "./perdeu.css";
 import { useNavigate } from "react-router-dom";
-import perca1 from "./assets/perca1.png";
+import perca1 from "./assets/perca.png";
 
 function Perca1() {
     const navigate = useNavigate();
