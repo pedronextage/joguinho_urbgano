@@ -1,52 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+}
+
 .perdeu-container {
     width: 100vw;
     height: 100vh;
 
-    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: contain;
+
+    background-color: #111;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 
     position: relative;
-    overflow: hidden;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
 }
 
-/* PERSONAGEM ESCOLHIDO */
-
-.personagem-perdeu {
-    position: absolute;
-
-    left: 50%;
-    bottom: 115px;
-
-    transform: translateX(-50%);
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-
-    z-index: 5;
-}
-
-.personagem-perdeu img {
-    width: 90px;
-    height: auto;
-
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-}
-
-/* BOTÃO AULA */
+/* BOTÃO */
 
 .botao-aula {
-    position: relative;
-
     margin-bottom: 35px;
 
-    padding: 16px 40px;
+    padding: 15px 30px;
 
     background: #e8b63a;
     color: #222;
@@ -55,24 +41,26 @@
     border-radius: 8px;
 
     font-family: "Press Start 2P", monospace;
-    font-size: 18px;
-    font-weight: bold;
-
-    box-shadow: 5px 5px 0 #222;
+    font-size: 14px;
 
     cursor: pointer;
 
-    z-index: 10;
+    box-shadow:
+        5px 5px 0 #000;
 
-    transition: transform 0.1s, box-shadow 0.1s;
+    transition: 0.15s;
 }
 
 .botao-aula:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 3px 3px 0 #222;
+    transform: translate(3px, 3px);
+
+    box-shadow:
+        2px 2px 0 #000;
 }
 
 .botao-aula:active {
     transform: translate(5px, 5px);
-    box-shadow: 0 0 0 #222;
+
+    box-shadow:
+        0 0 0 #000;
 }

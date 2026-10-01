@@ -1,5 +1,5 @@
-
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+```css
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 * {
     margin: 0;
@@ -14,108 +14,58 @@ body,
     height: 100%;
 }
 
+body {
+    overflow: hidden;
+}
+
 .briga-container {
     width: 100vw;
     height: 100vh;
 
-    position: relative;
-    overflow: hidden;
+    background-color: #111;
 
-    background-image: url("./assets/briga.png");
-    background-size: cover;
+    /* NÃO deixa a imagem esticar */
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    position: relative;
 }
 
+/* BOTÃO */
 
+.botao-briga {
+    margin-bottom: 35px;
 
-.briga-personagem {
-    position: absolute;
+    padding: 15px 30px;
 
-    bottom: 17%;
-    
-    width: 100px;
-    height: auto;
+    background: #e8b63a;
+    color: #222;
 
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-
-    object-fit: contain;
-
-    z-index: 5;
-}
-
-/* PERSONAGEM DO JOGADOR */
-
-.briga-personagem-jogador {
-    left: 27%;
-}
-
-/* OUTRO PERSONAGEM */
-
-.briga-personagem-outro {
-    right: 27%;
-}
-
-
-.briga-botao {
-    position: absolute;
-
-    left: 50%;
-    bottom: 8%;
-
-    transform: translateX(-50%);
-
-    padding: 18px 30px;
-
-    background: white;
-    color: #111;
+    border: 4px solid #222;
+    border-radius: 8px;
 
     font-family: "Press Start 2P", monospace;
     font-size: 14px;
 
-    border: 5px solid #111;
-
-    box-shadow: 7px 7px 0 #111;
-
     cursor: pointer;
 
-    z-index: 10;
+    box-shadow: 5px 5px 0 #000;
 
-    transition: 0.1s;
+    transition: 0.15s;
 }
 
-.briga-botao:hover {
-    transform: translateX(-50%) translateY(-3px);
-
-    box-shadow: 7px 10px 0 #111;
+.botao-briga:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 #000;
 }
 
-.briga-botao:active {
-    transform: translateX(-50%) translateY(4px);
-
-    box-shadow: 3px 3px 0 #111;
+.botao-briga:active {
+    transform: translate(5px, 5px);
+    box-shadow: 0 0 0 #000;
 }
-
-
-
-@media (max-width: 700px) {
-
-    .briga-personagem {
-        width: 75px;
-    }
-
-    .briga-personagem-jogador {
-        left: 20%;
-    }
-
-    .briga-personagem-outro {
-        right: 20%;
-    }
-
-    .briga-botao {
-        font-size: 10px;
-        padding: 15px 20px;
-    }
-}
-
+```
