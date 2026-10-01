@@ -6,21 +6,21 @@
     background-position: center;
     background-repeat: no-repeat;
 
+    position: relative;
+    overflow: hidden;
+
     display: flex;
     justify-content: center;
     align-items: flex-end;
-
-    position: relative;
-    overflow: hidden;
 }
 
-/* PERSONAGEM NA TELA DE PERDEU */
+/* PERSONAGEM ESCOLHIDO */
 
 .personagem-perdeu {
     position: absolute;
 
-    bottom: 110px;
     left: 50%;
+    bottom: 115px;
 
     transform: translateX(-50%);
 
@@ -32,28 +32,31 @@
 }
 
 .personagem-perdeu img {
-    width: 150px;
+    width: 90px;
     height: auto;
 
     image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
-/* BOTÃO */
+/* BOTÃO AULA */
 
 .botao-aula {
-    margin-bottom: 40px;
+    position: relative;
+
+    margin-bottom: 35px;
+
+    padding: 16px 40px;
 
     background: #e8b63a;
     color: #222;
 
+    border: 4px solid #222;
+    border-radius: 8px;
+
     font-family: "Press Start 2P", monospace;
     font-size: 18px;
     font-weight: bold;
-
-    padding: 18px 45px;
-
-    border: 4px solid #222;
-    border-radius: 8px;
 
     box-shadow: 5px 5px 0 #222;
 
@@ -61,7 +64,7 @@
 
     z-index: 10;
 
-    transition: 0.1s;
+    transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .botao-aula:hover {
