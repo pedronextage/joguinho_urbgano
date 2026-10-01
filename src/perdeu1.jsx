@@ -1,14 +1,14 @@
 import "./perdeu.css";
 import { useNavigate } from "react-router-dom";
-import fundo from "./assets/perca1.png";
+import perca from "./assets/perca.png";
 
-function Perdeu1() {
+function Perca() {
     const navigate = useNavigate();
 
     return (
         <div
             className="perdeu-container"
-            style={{ backgroundImage: `url(${fundo})` }}
+            style={{ backgroundImage: `url(${perca})` }}
         >
             <button
                 className="botao-aula"
@@ -20,4 +20,4 @@ function Perdeu1() {
     );
 }
 
-export default Perdeu1;
+export default Perca;
