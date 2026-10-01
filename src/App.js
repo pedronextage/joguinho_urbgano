@@ -2,7 +2,7 @@
 import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import Briga from "./briga";
 import Inicio from "./inicio";
 import EscolherPersonagem from "./escolher_personagem";
 import Historia from "./historia";
@@ -24,6 +24,10 @@ function App() {
           path="/"
           element={<Inicio />}
         />
+
+<Route 
+path="/briga" 
+element={<Briga />} />
 
         <Route
           path="/escolher-personagem"
